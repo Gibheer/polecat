@@ -1,7 +1,9 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 describe "Polecat" do
-  it "fails" do
-    fail "hey buddy, you should probably rename this file and start specing for real"
+  describe "#new" do
+    it "can be initialized" do
+      Polecat.new
+    end
   end
 end

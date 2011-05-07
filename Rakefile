@@ -17,8 +17,8 @@ Jeweler::Tasks.new do |gem|
   gem.name = "polecat"
   gem.homepage = "http://github.com/Gibheer/polecat"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = %Q{library for searching through documents}
+  gem.description = %Q{This is a search library for searching terms in documents}
   gem.email = "gibheer@gmail.com"
   gem.authors = ["Gibheer"]
   # dependencies defined in Gemfile
@@ -29,11 +29,6 @@ require 'rspec/core'
 require 'rspec/core/rake_task'
 RSpec::Core::RakeTask.new(:spec) do |spec|
   spec.pattern = FileList['spec/**/*_spec.rb']
-end
-
-RSpec::Core::RakeTask.new(:rcov) do |spec|
-  spec.pattern = 'spec/**/*_spec.rb'
-  spec.rcov = true
 end
 
 require 'reek/rake/task'
