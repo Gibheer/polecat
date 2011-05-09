@@ -16,7 +16,7 @@ class Polecat
 
     # returns true, if it has an index
     def index_dir?
-      false
+      File.exists?(@path + '/index.txt')
     end
 
     def write term

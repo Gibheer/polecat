@@ -29,7 +29,11 @@ describe "Index" do
       i.index_dir?.should == false
     end
 
-    it "returns true, if the directory contains an index"
+    it "returns true, if the directory contains an index" do
+      i = Polecat::Index.new @path
+      i.write 'foo'
+      i.index_dir?.should == true
+    end
   end
 
   describe "#write" do
@@ -62,6 +66,13 @@ describe "Index" do
       i = Polecat::Index.new @path
       i.write "foo"
       i.search("foo").should == 0
+    end
+
+    it "returns nil, when no match was found" do
+      i = Polecat::Index.new @path
+      i.write "foo"
+      i.write "bar"
+      i.search("baz").should == nil
     end
   end
 end
