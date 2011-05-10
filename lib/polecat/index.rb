@@ -29,11 +29,12 @@ class Polecat
     def search term
       File.open @path + '/index.txt' do |f|
         linenr = 0
+        matches = []
         while (line = f.gets) do
-          return linenr if line =~ /#{term}/
+          matches << linenr if line =~ /#{term}/
           linenr += 1
         end
-        nil
+        matches
       end
     end
   end

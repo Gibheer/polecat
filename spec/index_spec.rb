@@ -62,17 +62,19 @@ describe "Index" do
       @file = @path + '/index.txt'
     end
 
-    it "returns the line of the first found occurence" do
-      i = Polecat::Index.new @path
-      i.write "foo"
-      i.search("foo").should == 0
-    end
-
-    it "returns nil, when no match was found" do
+    it "returns an array of lines, where the match was found" do
       i = Polecat::Index.new @path
       i.write "foo"
       i.write "bar"
-      i.search("baz").should == nil
+      i.write "foo"
+      i.search("foo").should == [0, 2]
+    end
+
+    it "returns an empty array, when no match was found" do
+      i = Polecat::Index.new @path
+      i.write "foo"
+      i.write "bar"
+      i.search("baz").should == []
     end
   end
 end
