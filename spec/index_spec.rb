@@ -32,6 +32,7 @@ describe "Index" do
     it "returns true, if the directory contains an index" do
       i = Polecat::Index.new @path
       i.write 'foo'
+      i.flush
       i.index_dir?.should == true
     end
   end
@@ -45,6 +46,7 @@ describe "Index" do
     it "writes a string to a file" do
       i = Polecat::Index.new @path
       i.write "foobar"
+      i.flush
       File.read(@file).should == "foobar\n"
     end
 
@@ -52,7 +54,29 @@ describe "Index" do
       i = Polecat::Index.new @path
       i.write "foo"
       i.write "bar"
+      i.flush
       File.read(@file).should == "foo\nbar\n"
+    end
+  end
+
+  describe "#flush" do
+    before do
+      @path = prepare_index_dir
+      @file = @path + '/index.txt'
+    end
+
+    it "does not write anything to the file, until the #flush was called" do
+      i = Polecat::Index.new @path
+      i.flush
+      i.write "foo"
+      File.read(@file).should == ""
+    end
+
+    it "writes the content in the buffer to the file" do
+      i = Polecat::Index.new @path
+      i.write "foo"
+      i.flush
+      File.read(@file).should == "foo\n"
     end
   end
 
@@ -67,12 +91,14 @@ describe "Index" do
       i.write "foo"
       i.write "bar"
       i.write "foo"
+      i.flush
       i.search("foo").should == [0, 2]
     end
 
     it "returns an array of lines, where the match is somewhere in it" do
       i = Polecat::Index.new @path
       i.write "foo bar baz"
+      i.flush
       i.search("baz").should == [0]
     end
 
@@ -80,6 +106,7 @@ describe "Index" do
       i = Polecat::Index.new @path
       i.write "foo"
       i.write "bar"
+      i.flush
       i.search("baz").should == []
     end
   end

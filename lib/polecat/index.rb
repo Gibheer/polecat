@@ -9,6 +9,7 @@ class Polecat
     def initialize path
       if File.directory? path
         @path = path
+        @buffer = ""
       else
         raise ArgumentError, "Argument no valid directory"
       end
@@ -20,8 +21,12 @@ class Polecat
     end
 
     def write term
+      @buffer += "#{term}\n"
+    end
+
+    def flush
       File.open @path + '/index.txt', 'a' do |f|
-        f.write "#{term}\n"
+        f.write "#{@buffer}"
         f.flush
       end
     end
