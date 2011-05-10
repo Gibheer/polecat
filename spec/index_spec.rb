@@ -70,6 +70,12 @@ describe "Index" do
       i.search("foo").should == [0, 2]
     end
 
+    it "returns an array of lines, where the match is somewhere in it" do
+      i = Polecat::Index.new @path
+      i.write "foo bar baz"
+      i.search("baz").should == [0]
+    end
+
     it "returns an empty array, when no match was found" do
       i = Polecat::Index.new @path
       i.write "foo"
