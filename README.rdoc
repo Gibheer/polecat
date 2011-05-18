@@ -1,6 +1,10 @@
 = polecat
 
-Description goes here.
+This is my attempt to build a search library like lucene in native ruby.
+
+The idea formed, when I learned about the rubinius project and it's ability to tune parts of the ruby code with it's jit. It's a bit sad for MRI, that more and more ruby code get's converted to C, so it would be great, if rbx could be as performant as MRI, even if great parts of a application are written in ruby.
+
+More updates are to come, when it is further progessing.
 
 == Contributing to polecat
  
