@@ -24,3 +24,14 @@ def prepare_index_dir
   Dir.mkdir path
   return path
 end
+
+module Spec
+  class FooDocument
+    include Polecat::Document
+
+    field :id
+    field :name, :lazy => true
+    field :lastname, :lazy => true
+    field :description, :analyze => true, :lazy => true
+  end
+end

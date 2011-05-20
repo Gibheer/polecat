@@ -40,5 +40,12 @@ end
 
 task :default => :spec
 
+namespace :spec do
+  desc "with all ruby versions"
+  task :all do
+    puts `rvm 1.8.7@polecat,1.9.2@polecat,rbx@polecat,rbx-hydra@polecat rake spec`
+  end
+end
+
 require 'yard'
 YARD::Rake::YardocTask.new
