@@ -9,10 +9,16 @@ class Polecat
     def initialize path
       if File.directory? path
         @path = path
-        @buffer = ""
+        @buffer = []
+        @documents = []
       else
         raise ArgumentError, "Argument no valid directory"
       end
+    end
+
+    # returns the document count currently loaded
+    def count
+      @documents.count
     end
 
     # returns true, if it has an index
@@ -21,26 +27,31 @@ class Polecat
     end
 
     def write term
-      @buffer += "#{term}\n"
+      @buffer << term
+    end
+
+    # read all stored documents from the index files into the index
+    def read
+      if (File.exists?(@path + '/index.txt'))
+        @documents = Marshal.load(File.read(@path+'/index.txt'))
+      end
     end
 
     def flush
-      File.open @path + '/index.txt', 'a' do |f|
-        f.write "#{@buffer}"
-        f.flush
+      @documents += @buffer
+      File.open @path + '/index.txt', 'w' do |f|
+        f.write Marshal.dump(@documents)
       end
     end
 
     def search term
-      File.open @path + '/index.txt' do |f|
-        linenr = 0
-        matches = []
-        while (line = f.gets) do
-          matches << linenr if line =~ /#{term}/
-          linenr += 1
-        end
-        matches
+      matches = []
+      linenr = 0
+      @documents.each do |line|
+        matches << linenr if line =~ /#{term}/
+        linenr += 1
       end
+      matches
     end
   end
 end
