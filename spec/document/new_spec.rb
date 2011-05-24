@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe "Document#initialize" do
   it "creates a new Document object" do
     d = Spec::FooDocument.new
-    d.is_a?(Document).should == true
+    d.is_a?(Polecat::Document).should == true
   end
 
   it "takes a hash as argument" do

@@ -27,7 +27,7 @@ end
 
 module Spec
   class FooDocument
-    include Document
+    include Polecat::Document
 
     field :id
     field :name, :lazy => true
