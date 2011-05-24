@@ -1,4 +1,8 @@
 class Polecat
+  # storage of documents
+  #
+  # This is the core of the search platform, the index. It stores the documents,
+  # stores and reads them and make them searchable.
   class Index
     attr_reader :path
 
@@ -36,15 +40,16 @@ class Polecat
 
     # read all stored documents from the index files into the index
     def read
-      if (File.exists?(@path + '/index.txt'))
-        @documents = Marshal.load(File.read(@path+'/index.txt'))
+      index_file = @path + '/index.txt'
+      if (File.exists? index_file)
+        @documents = Marshal.load(File.read(index_file))
       end
     end
 
     def flush
       @documents += @buffer
-      File.open @path + '/index.txt', 'w' do |f|
-        f.write Marshal.dump(@documents)
+      File.open @path + '/index.txt', 'w' do |file|
+        file.write Marshal.dump(@documents)
       end
     end
 
