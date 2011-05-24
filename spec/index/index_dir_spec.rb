@@ -12,7 +12,7 @@ describe "Document#index_dir?" do
 
   it "returns true, if the directory contains an index" do
     i = Polecat::Index.new @path
-    i.write 'foo'
+    i.write Spec::FooDocument.new(:id => 1)
     i.flush
     i.index_dir?.should == true
   end

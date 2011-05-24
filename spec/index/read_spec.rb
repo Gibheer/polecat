@@ -13,7 +13,7 @@ describe "Index#read" do
 
   it "loads all documents in the index directory" do
     i = Polecat::Index.new @path
-    i.write "foo"
+    i.write Spec::FooDocument.new(:id => 1)
     i.flush
     i = Polecat::Index.new @path
     i.read

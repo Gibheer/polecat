@@ -26,8 +26,12 @@ class Polecat
       File.exists?(@path + '/index.txt')
     end
 
-    def write term
-      @buffer << term
+    def write doc
+      if (doc.kind_of? Document)
+        @buffer << doc
+      else
+        raise ArgumentError, "not a document"
+      end
     end
 
     # read all stored documents from the index files into the index
@@ -47,8 +51,10 @@ class Polecat
     def search term
       matches = []
       linenr = 0
-      @documents.each do |line|
-        matches << linenr if line =~ /#{term}/
+      @documents.each do |doc|
+        doc.attributes.each do |key, value|
+          matches << linenr if value[:value] =~ /#{term}/
+        end
         linenr += 1
       end
       matches
