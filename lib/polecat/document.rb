@@ -8,7 +8,7 @@ class Polecat
       :value => nil
     }
 
-    def self.included klass # :nodoc:
+    def self.included klass
       klass.extend(DocumentResource)
       klass.instance_variable_set :@attributes, {}
     end
