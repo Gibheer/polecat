@@ -16,10 +16,11 @@ class Polecat
     #   IndexSearcher.new 'index_dir'
     #   IndexSearcher.new(IndexReader.new 'index_dir')
     def initialize *args
-      if args[0].class == Polecat::IndexReader
-        @reader = args[0]
-      elsif args[0].class == String
-        @reader = Polecat::IndexReader.new args[0]
+      first = args[0]
+      if first.class == Polecat::IndexReader
+        @reader = first
+      elsif first.class == String
+        @reader = Polecat::IndexReader.new first
       end
     end
 
