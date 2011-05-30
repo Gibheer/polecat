@@ -5,9 +5,9 @@ describe "IndexReader#read" do
     @path = prepare_index_dir
   end
 
-  it "returns a hash with all documents" do
+  it "returns a array with all documents" do
     r = Polecat::IndexReader.new @path
-    r.read.class.should == Hash
+    r.read.class.should == Array
   end
 
   it "returns an empty hash for a empty directory" do
@@ -21,6 +21,13 @@ describe "IndexReader#read" do
     w.write
     r = Polecat::IndexReader.new @path
     r.read.count.should == 1
+  end
+
+  it "returns an array of documents" do
+    w = Polecat::IndexWriter.new @path
+    w.add Spec::FooDocument.new(:id => 23)
+    w.write
+    w.create_reader.read[0].kind_of?(Polecat::Document).should == true
   end
 
   it "merges all documents from different files together" do

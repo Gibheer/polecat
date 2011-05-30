@@ -29,8 +29,9 @@ class Polecat
         files.each do |file|
           documents += Marshal.load(File.read(file))
         end
+        documents
       else
-        {}
+        []
       end
     end
 
