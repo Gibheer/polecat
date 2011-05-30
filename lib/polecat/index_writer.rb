@@ -79,5 +79,12 @@ class Polecat
         return true
       end
     end
+
+    # creates an index reader with the writers path
+    #
+    # @returns [Polecat::IndexReader] an IndexReader with the same path
+    def create_reader
+      Polecat::IndexReader.new @path
+    end
   end
 end
