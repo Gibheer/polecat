@@ -1,5 +1,6 @@
 # ignore test directories
 spec/index_dir/*
+tmp
 
 # rcov generated
 coverage
