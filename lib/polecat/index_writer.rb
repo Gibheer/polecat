@@ -8,6 +8,7 @@ class Polecat
   # file is written as an extra lock. It then writes a new file into the
   # directory, which has all documents.
   class IndexWriter
+    attr_reader :path
 
     # create a new IndexWriter
     #
@@ -22,13 +23,6 @@ class Polecat
         @path = path
         @documents = []
       end
-    end
-
-    # returns the path of the IndexWriter
-    #
-    # @return [String] the path of the IndexWriter
-    def path
-      @path
     end
 
     # returns the count of elements not flushed
