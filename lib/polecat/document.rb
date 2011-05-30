@@ -8,7 +8,11 @@ class Polecat
       :value => nil
     }
 
-    def self.included klass
+    # include the document
+    #
+    # This includes the document into the target class.
+    # @private
+    def self.included klass #:nodoc:
       klass.extend(DocumentResource)
       klass.instance_variable_set :@attributes, {}
     end
@@ -17,14 +21,14 @@ class Polecat
     #
     # It is possible to create a new document with a hash, which has all values
     # of the fields.
-    # Example:
-    # class Foo
-    #   include Polecat::Document
+    # @example initializing a document
+    #   class Foo
+    #     include Polecat::Document
     #
-    #   field :id
-    #   field :description
-    # end
-    # f = Foo.new :id => 1, :description => 'foo'
+    #     field :id
+    #     field :description
+    #   end
+    #   f = Foo.new :id => 1, :description => 'foo'
     def initialize fields = {}
       fields.each do |key, value|
         attribute_set key, value
