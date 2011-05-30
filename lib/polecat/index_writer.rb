@@ -52,32 +52,15 @@ class Polecat
     # Write all stored documents to the disc and clear the buffer.
     # @return [Boolean] true when the write was a success
     def write
-      lock_path = @path + '/index.lock'
-      if File.exists?(lock_path)
-        return false
-      else
-        FileUtils.touch(lock_path)
-        last_file = Dir[@path + '/*.ind'].sort.last
-        if last_file.nil?
-          file_name = @path + '/ind0.ind'
-        else
-          number = File.basename(last_file).match(/[0-9]+/)[0].to_i
-          # we have to match the complete name, because there can be
-          # numbers before the file too
-          file_name = last_file.gsub(
-            /ind#{number}\.ind/,
-            "ind#{(number + 1)}.ind"
-          )
-        end
-        
-        File.open file_name, 'w' do |file|
-          file.write Marshal.dump(@documents)
-        end
-
-        @documents = []
-        FileUtils.rm lock_path
-        return true
+      return false unless set_lock
+      file_name = generate_filename
+              
+      File.open file_name, 'w' do |file|
+        file.write Marshal.dump(@documents)
       end
+
+      @documents = []
+      release_lock
     end
 
     # creates an index reader with the writers path
@@ -86,5 +69,55 @@ class Polecat
     def create_reader
       Polecat::IndexReader.new @path
     end
+
+    # set the lock on the index
+    # @private
+    def set_lock
+      if File.exists? lock_file_name
+        false
+      else
+        FileUtils.touch lock_file_name
+        true
+      end
+    end
+    private :set_lock
+
+    # release the index lock
+    # @private
+    def release_lock
+      if File.exists? lock_file_name
+        FileUtils.rm lock_file_name
+        true
+      else
+        false
+      end
+    end
+    private :release_lock
+
+    # get the full path of the lock file
+    # @private
+    def lock_file_name
+      @path + '/index.lock'
+    end
+    private :lock_file_name
+
+    # generates a new file name for an index file
+    # @private
+    def generate_filename 
+      last_file = Dir[@path + '/*.ind'].sort.last
+      if last_file.nil?
+        file_name = @path + '/ind0.ind'
+      else
+        number = File.basename(last_file).match(/[0-9]+/)[0].to_i
+        # we have to match the complete name, because there can be
+        # numbers before the file too
+        file_name = last_file.gsub(
+          /ind#{number}\.ind/,
+          "ind#{(number + 1)}.ind"
+        )
+      end
+      file_name
+    end
+    private :generate_filename
   end
 end
