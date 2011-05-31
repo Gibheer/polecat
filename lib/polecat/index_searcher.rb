@@ -36,11 +36,9 @@ class Polecat
     end
 
     def search query
-      result = []
-      @reader.read.each do |doc|
-        result << doc if (doc.attributes[@default_field][:value] == (query))
+      @reader.read.select do |doc|
+        doc.attributes.fetch(@default_field).fetch(:value) == query
       end
-      result
     end
   end
 end
