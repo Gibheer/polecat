@@ -53,3 +53,6 @@ pkg
 
 # ignore rvmrc
 .rvmrc
+
+# ignore Gemfile.lock
+Gemfile.lock
