@@ -54,7 +54,7 @@ class Polecat
         if query.relation == :and
           rs.count == query.terms.count
         else
-          rs.empty?
+          !rs.empty?
         end
       end
     end

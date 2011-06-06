@@ -51,7 +51,18 @@ describe "IndexSearcher#search" do
         add(Polecat::Term.new(:name, :eq, 'foobar'))
     }
     it "returns a document for a query with multiple terms" do
-      s.search(q5).count.should == 1
+      s.search(q5)[0].id.should == 3
+    end
+
+    let(:q6) {
+      Polecat::Query.new(:or).
+        add(Polecat::Term.new(:id, :eq, 1)).
+        add(Polecat::Term.new(:id, :eq, 2))
+    }
+    it "returns multiple documents for an 'or' relationship" do
+      result = s.search(q6)
+      result[0].id.should == 1
+      result[1].id.should == 2
     end
   end
 end
