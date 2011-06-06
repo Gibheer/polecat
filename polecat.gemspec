@@ -32,6 +32,7 @@ Gem::Specification.new do |s|
     "lib/polecat/index_writer.rb",
     "lib/polecat/query.rb",
     "lib/polecat/term.rb",
+    "polecat.gemspec",
     "spec/index_reader/locked_spec.rb",
     "spec/index_reader/new_spec.rb",
     "spec/index_reader/read_spec.rb",
