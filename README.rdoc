@@ -4,7 +4,75 @@ This is my attempt to build a search library like lucene in native ruby.
 
 The idea formed, when I learned about the rubinius project and it's ability to tune parts of the ruby code with it's jit. It's a bit sad for MRI, that more and more ruby code get's converted to C, so it would be great, if rbx could be as performant as MRI, even if great parts of a application are written in ruby.
 
-More updates are to come, when it is further progessing.
+== How to use
+
+It is easy to use the search. The first thing, you have to do, is building a
+class, which has to have a method #attributes which has to return an array of
+all attributes. For every attribute, there as to be a reader, so that the search
+can read them.
+A great way to build such a class is by using (virtus)[http://github.com/solnic/virtus]
+which is part of DM2.
+The Code can look like this
+
+    require 'virtus'
+    
+    class Document
+      include Virtus
+      attribute :id, Integer
+      attribute :text, String
+      attribute :short, String
+    end
+
+After that, you need an IndexWriter to fill the index with documents.
+
+    writer = Polecat::IndexWriter.new 'index/'
+
+After that, fill the index with as much Documents you want and write them
+to the harddisk. As long, as you did not write them, they are only in the
+memory and not searchable.
+
+    writer.add Document.new(:id => 0, :text => 'foobar', :short => 'foo')
+    writer.add Document.new(:id => 1, :text => 'Lorem', :short => 'ipsum')
+    writer.write # write the docs
+
+Now you can get the reader or searcher.
+
+    # first way - create a reader with the informations of the writer
+    reader = writer.create_reader
+    searcher = Polecat::IndexSearcher.new :reader => reader
+    
+    # second way - create a new reader
+    reader = Polecat::IndexReader.new 'index/'
+    searcher = Polecat::IndexSearcher.new :reader => reader
+
+    # third way - create a new searcher and let it handle the reader
+    searcher = Polecat::IndexSearcher.new :path => 'index/'
+
+Either way, you need a Searcher to go hunting for the documents. For making a
+search, there is another thing you need, a query.
+
+A Query consists of one or more terms, which contain the match you want, like this.
+
+    # create a new Term with the :field, :operator and the :value it should has
+    # this would generate a id == 0 term
+    term1 = Term.new(:id, :eq, 0)
+
+    # this would generate a id < 1 term
+    term2 = Term.new(:id, :lt, 1)
+
+Now that we have two terms you need to put them into a Query, which can combine them
+with an :or operator or with an :and operator, which is the default.
+You can append multiple terms with add, which returns the query itself.
+
+    query = Polecat::Query.new(:or).add(term1).add(term2)
+
+Now, give that to #search of the searcher and you get an array of documents, which
+should contain one Document in this case.
+
+    result = searcher.search(query)
+
+Now, try it out and have some fun. If you find a bug, write a bug report or better, fork it
+and fix it :D
 
 == Contributing to polecat
  
