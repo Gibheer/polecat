@@ -17,7 +17,7 @@ describe "IndexReader#read" do
 
   it "returns the document count found in the index directory" do
     w = Polecat::IndexWriter.new @path
-    w.add Spec::FooDocument.new(:id => 23)
+    w.add Spec::TestDocument.new(:id => 23)
     w.write
     r = Polecat::IndexReader.new @path
     r.read.count.should == 1
@@ -25,16 +25,16 @@ describe "IndexReader#read" do
 
   it "returns an array of documents" do
     w = Polecat::IndexWriter.new @path
-    w.add Spec::FooDocument.new(:id => 23)
+    w.add Spec::TestDocument.new(:id => 23)
     w.write
-    w.create_reader.read[0].kind_of?(Polecat::Document).should == true
+    w.create_reader.read[0].respond_to?(:attributes).should == true
   end
 
   it "merges all documents from different files together" do
     w = Polecat::IndexWriter.new @path
-    w.add Spec::FooDocument.new(:id => 23)
+    w.add Spec::TestDocument.new(:id => 23)
     w.write
-    w.add Spec::FooDocument.new(:id => 24)
+    w.add Spec::TestDocument.new(:id => 24)
     w.write
     w.create_reader.read.count.should == 2
   end

@@ -46,7 +46,7 @@ class Polecat
         #doc.attributes.fetch(@default_field).fetch(:value) == query
         rs = []
         query.terms.each do |term|
-          val = doc.attributes.fetch(term.field.to_sym).fetch(:value)
+          val = doc.send(term.field.to_sym)
           if compare val, term.operator, term.value
             rs << true
           end

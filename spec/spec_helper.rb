@@ -3,6 +3,7 @@ $LOAD_PATH.unshift(File.dirname(__FILE__))
 require 'rspec'
 require 'fileutils'
 require 'polecat'
+require 'virtus'
 
 # Requires supporting files with custom matchers and macros, etc,
 # in ./support/ and its subdirectories.
@@ -26,12 +27,12 @@ def prepare_index_dir
 end
 
 module Spec
-  class FooDocument
-    include Polecat::Document
+  class TestDocument
+    include Virtus
 
-    field :id
-    field :name, :lazy => true
-    field :lastname, :lazy => true
-    field :description, :analyze => true, :lazy => true
+    attribute :id, Integer
+    attribute :name, String
+    attribute :lastname, String
+    attribute :description, String, :analyze => true, :lazy => true
   end
 end

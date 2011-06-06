@@ -40,10 +40,10 @@ class Polecat
     # to the filesystem.
     # @param [Document] doc the document to store
     def add doc
-      if doc.kind_of? Polecat::Document
+      if doc.respond_to? :attributes
         @documents << doc
       else
-        raise ArgumentError, 'not a document'
+        raise ArgumentError, 'missing method attributes'
       end
     end
 

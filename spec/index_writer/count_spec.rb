@@ -12,7 +12,7 @@ describe "IndexWriter#count" do
 
   it "returns the number of documents stored in the storage" do
     w = Polecat::IndexWriter.new @path
-    w.add Spec::FooDocument.new
+    w.add Spec::TestDocument.new
     w.count.should == 1
   end
 end

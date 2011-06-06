@@ -11,10 +11,10 @@ describe "IndexSearcher#search" do
 
   context "searching on a filled index" do
     before do
-      w.add Spec::FooDocument.new(:id => 0, :name => 'foo')
-      w.add Spec::FooDocument.new(:id => 1, :name => 'bar')
-      w.add Spec::FooDocument.new(:id => 2, :name => 'baz')
-      w.add Spec::FooDocument.new(:id => 3, :name => 'foobar')
+      w.add Spec::TestDocument.new(:id => 0, :name => 'foo')
+      w.add Spec::TestDocument.new(:id => 1, :name => 'bar')
+      w.add Spec::TestDocument.new(:id => 2, :name => 'baz')
+      w.add Spec::TestDocument.new(:id => 3, :name => 'foobar')
       w.write
     end
 
