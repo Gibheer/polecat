@@ -1,4 +1,4 @@
-class Polecat
+module Polecat
   # reads an index directory
   #
   # This class reads the content of an index directory and builds the

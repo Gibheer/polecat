@@ -1,4 +1,4 @@
-class Polecat
+module Polecat
   # interface for searching an index
   #
   # Build on top of an Polecat::IndexReader, this class let's you search through

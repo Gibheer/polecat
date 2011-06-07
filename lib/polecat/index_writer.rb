@@ -1,4 +1,4 @@
-class Polecat
+module Polecat
   # handles the writing of new documents to the index.
   #
   # This class is responsible for writing the documents to the index. It takes

@@ -1,4 +1,4 @@
-class Polecat
+module Polecat
   class Term
     # the field name which should be found
     attr_reader :field

@@ -1,4 +1,4 @@
-class Polecat
+module Polecat
   # The Query manages a number of terms or queries which are set into a
   # relation. A relation is needed to say, which documents shall be
   # returned.
