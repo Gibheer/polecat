@@ -13,6 +13,17 @@ describe "Term#new" do
     t.value.should == /^foo$/
   end
 
+  it "creates a method #compare with one argument after initialization" do
+    t = Polecat::Term.new :name, :eq, "foo"
+    t.respond_to?(:compare).should == true
+    t.method(:compare).arity.should == 1
+  end
+
+  it "raises an error if a regexp shall be compared for larger or minor" do
+    lambda { Polecat::Term.new(:name, :lt, /foo/) }.should(
+      raise_error(ArgumentError))
+  end
+
   it "raises an error if no argument is given" do
     lambda { Polecat::Term.new }.should raise_error
   end

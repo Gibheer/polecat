@@ -42,12 +42,12 @@ module Polecat
     # @param [String] query a String which get's matched against the documents
     # @return [Array] a list of all matching documents
     def search query
-      @reader.read.select do |doc|
+      @content = @reader.read if @content.nil?
+      @content.select do |doc|
         #doc.attributes.fetch(@default_field).fetch(:value) == query
         rs = []
         query.terms.each do |term|
-          val = doc.send(term.field.to_sym)
-          if compare val, term.operator, term.value
+          if term.compare(doc.send(term.field))
             rs << true
           end
         end
@@ -58,27 +58,5 @@ module Polecat
         end
       end
     end
-
-    # compare the document value with the searched value
-    #
-    # This compares the two values with the operator
-    # @return [Any] trueish for matches or falsey
-    # @private
-    def compare ival, op, tval
-      if op == :eq
-        if tval.class == Regexp
-          ival.match tval
-        else
-          ival == tval
-        end
-      elsif op == :gt
-        ival < tval
-      elsif op == :lt
-        ival > tval
-      else
-        false
-      end
-    end
-    private :compare
   end
 end

@@ -12,10 +12,30 @@ module Polecat
       @field = field
       @operator = operator
       if @operator == :eq && value.class == String
-        @value = /^#{value}$/
+        value = /^#{value}$/
       else
-        @value = value
+        value = value
       end
+      @value = value
+
+      method_string = 'def compare(inval);'
+      if value.class == Regexp
+        if operator == :eq
+          method_string += "  inval.match(@value);"
+        else
+          raise ArgumentError, "operation #{operator} does not work with a regexp"
+        end
+      else
+        if operator == :eq
+          method_string += "  inval == @value;"
+        elsif operator == :lt
+          method_string += "  inval < @value;"
+        elsif operator == :gt
+          method_string += "  inval > @value;"
+        end
+      end
+      method_string += 'end;'
+      self.instance_eval method_string
     end
   end
 end
