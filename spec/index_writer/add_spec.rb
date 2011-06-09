@@ -11,7 +11,7 @@ describe "IndexWriter#add" do
     w.count.should == 1
   end
 
-  it "takes multiple documents and sotres them" do
+  it "takes multiple documents and stores them" do
     w.add doc1
     w.add doc2
     w.count.should == 2
