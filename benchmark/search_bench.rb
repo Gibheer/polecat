@@ -43,7 +43,7 @@ query = Polecat::Query.new.add(Polecat::Term.new(:name, :lt, 25000))
 
 Benchmark.bm do |x|
   x.report('1') { run_threads 1, n, searcher, query.dup }
-  x.report('2') { run_threads 1, n, searcher, query.dup }
-  x.report('4') { run_threads 1, n, searcher, query.dup }
-  x.report('8') { run_threads 1, n, searcher, query.dup }
+  x.report('2') { run_threads 2, n, searcher, query.dup }
+  x.report('4') { run_threads 4, n, searcher, query.dup }
+  x.report('8') { run_threads 8, n, searcher, query.dup }
 end
