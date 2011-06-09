@@ -1,0 +1,18 @@
+* IndexSearcher
+  * build indexes for attributes
+    * implement tree structures for index
+      * binary tree
+      * b-tree
+      * word tree for strings
+      * index has only the position of document in storage
+  * add scoring for findings
+    * could be implemented as per document score stored in the index
+    * findings of string in the document in relation to findings in all documents
+      * info should be accessible after building the index
+* implement stemmer for strings
+  * build an abstract stemmer class
+  * implement a simple stemmer
+* implement resultset
+  * should be streamlined to gather resultset from multiple queries
+  * sorts the result if needed
+  * returns only the top x documents
