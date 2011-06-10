@@ -4,7 +4,7 @@ module Polecat
   # This class can be used for cleaning strings in the most simple way. If it
   # does not do, what you intent it to do, inherit from Polecat::Stemmer and
   # implement your own.
-  class SimpleStemmer < Polecat::Stemmer
+  class SimpleStemmer
     def stem word
       if word.class == Array
         word.each {|w| self.stem w }
