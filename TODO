@@ -1,3 +1,10 @@
+* implement stemmer for strings
+  * build an abstract stemmer class
+  * implement a simple stemmer
+* build an analyzer to split the strings
+  * the analyzer uses tokens to split the stream
+  * it can throw out string parts, which have no meaning
+  * builds an array of strings with number of occurences (needed for scoring)
 * IndexSearcher
   * build indexes for attributes
     * implement tree structures for index
@@ -9,9 +16,6 @@
     * could be implemented as per document score stored in the index
     * findings of string in the document in relation to findings in all documents
       * info should be accessible after building the index
-* implement stemmer for strings
-  * build an abstract stemmer class
-  * implement a simple stemmer
 * implement resultset
   * should be streamlined to gather resultset from multiple queries
   * sorts the result if needed
