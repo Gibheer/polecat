@@ -1,10 +1,11 @@
-* implement stemmer for strings
-  * build an abstract stemmer class
-  * implement a simple stemmer
-* build an analyzer to split the strings
-  * the analyzer uses tokens to split the stream
-  * it can throw out string parts, which have no meaning
-  * builds an array of strings with number of occurences (needed for scoring)
+- implement stemmer for strings
+  - implement a simple stemmer
+- build an analyzer to split the strings
+  ? the analyzer uses tokens to split the stream
+  ? it can throw out string parts, which have no meaning
+  - builds an array of strings with number of occurences (needed for scoring)
+    * the index writer will do this, as i think the analyzer just has to
+      deliver the array itself
 * IndexSearcher
   * build indexes for attributes
     * implement tree structures for index
