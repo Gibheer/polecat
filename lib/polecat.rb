@@ -8,4 +8,5 @@ module Polecat
   require 'polecat/index_searcher'
   require 'polecat/query'
   require 'polecat/term'
+  require 'polecat/storage/storage'
 end
