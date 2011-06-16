@@ -22,6 +22,6 @@ describe "HashStorage#delete" do
   end
 
   it "raises an error when the argument does not support #<=>" do
-    lambda { s.delete(:foo) }.should raise_error(ArgumentError)
+    lambda { s.delete(nil) }.should raise_error(ArgumentError)
   end
 end

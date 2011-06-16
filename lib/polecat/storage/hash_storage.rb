@@ -46,7 +46,9 @@ module Polecat
       end
 
       def check_key key
-        raise ArgumentError, 'key does not support #<=>' unless key.respond_to?(:<=>)
+        unless key.respond_to?(:<=>) && key.respond_to?(:<=)
+          raise ArgumentError, 'key does not support #<=>' 
+        end
       end
       private :check_key
     end

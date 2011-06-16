@@ -19,6 +19,6 @@ describe "HashStorage#find" do
   end
 
   it "raises an error when the type does not know #<=>" do
-    lambda { s.find(:foo) }.should raise_error(ArgumentError)
+    lambda { s.find(nil) }.should raise_error(ArgumentError)
   end
 end

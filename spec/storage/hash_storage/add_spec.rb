@@ -17,7 +17,6 @@ describe "HashStorage#add" do
   end
 
   it "raises an error when the attribute does not support #<=>" do
-    s.add('foo', 'bar')
-    lambda { s.add(:foo, 'baz') }.should raise_error(ArgumentError)
+    lambda { s.add(nil, 'baz') }.should raise_error(ArgumentError)
   end
 end
