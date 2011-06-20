@@ -44,7 +44,6 @@ module Polecat
     def search query
       @content = @reader.read if @content.nil?
       @content.select do |doc|
-        #doc.attributes.fetch(@default_field).fetch(:value) == query
         rs = []
         query.terms.each do |term|
           if term.compare(doc.send(term.field))
@@ -55,6 +54,87 @@ module Polecat
           rs.count == query.terms.count
         else
           !rs.empty?
+        end
+      end
+    end
+
+    # searches through all documents
+    #
+    # Run the query against the @default_field@ of every stored document to get
+    # a list of all matching documents.
+    # @param [String] query a String which get's matched against the documents
+    # @return [Array] a list of all matching documents
+    def search_with_index query
+      docs = []
+      return docs if query.terms.empty?
+      load if @content.nil?
+      return docs if @content.nil?
+      index = {}
+      query.terms.each do |term|
+        if term.operator == :eq && term.value.class != Regexp
+          set = @attribute_storage[term.field][term.value]
+        else
+          set = @content.select do |doc|
+            term.compare(doc.send(term.field))
+          end
+        end
+
+        if !set.nil? && !set.empty?
+          if docs.empty?
+            docs = set
+            if query.relation == :and
+              docs.each do |value|
+                index[value] = nil
+              end
+            end
+          else
+            if query.relation == :or
+              docs += set
+            else
+              set.each do |value|
+                if !index.has_key? value
+                  docs << value
+                  index[value] = nil
+                end
+              end
+            end
+          end
+        end
+      end
+      docs
+    end
+
+    # loads all stuff and builds the indexes
+    def load
+      @content = @reader.read
+      if @content.nil?
+        return
+      end
+      @attribute_storage = {}
+      attributes = @content.first.class.attributes
+      attributes.each do |key, attribute|
+        if attribute.options.has_key? :storage
+          @attribute_storage[key] = attribute.options[:storage].new
+        else
+          @attribute_storage[key] = Hash.new
+        end
+      end
+      @content.each do |doc|
+        add_doc doc
+      end
+    end
+
+    def add_doc doc
+      doc.attributes.each do |key, value|
+        begin
+          store = @attribute_storage[key][value]
+        rescue
+          store = nil
+        end
+        if store.nil?
+          @attribute_storage[key][value] = [doc]
+        else
+          store << doc
         end
       end
     end
