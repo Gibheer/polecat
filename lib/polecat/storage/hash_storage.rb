@@ -10,6 +10,7 @@ module Polecat
         check_key key
         @storage[key] = value
       end
+      alias :[]= :add
 
       def delete key
         check_key key
@@ -32,6 +33,7 @@ module Polecat
           nil
         end
       end
+      alias :[] :find
 
       def select &block
         out = []

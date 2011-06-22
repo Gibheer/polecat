@@ -36,6 +36,7 @@ module Polecat
           end # end of while
         end
       end
+      alias :[]= :add
 
       def delete key
         check_key key
@@ -96,6 +97,7 @@ module Polecat
         end
         nil
       end
+      alias :[] :find
 
       def select node = @root, &block
         if node.nil?
