@@ -64,6 +64,15 @@ module Polecat
       def interval lower, upper
         raise NotImplementedError
       end
+
+      # traverse all keys
+      #
+      # Traverse the list of all documents and get a list of tuples.
+      # @param [Proc] the block to traverse all documents
+      # @yield [key, value] get a list of tuples
+      def each &block
+        raise NotImplementedError
+      end
     end
   end
 end

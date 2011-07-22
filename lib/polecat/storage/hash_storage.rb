@@ -47,6 +47,11 @@ module Polecat
         @storage.count
       end
 
+      # traverse all elements 
+      def each &block
+        @storage.each &block
+      end
+
       def check_key key
         unless key.respond_to?(:<=>) && key.respond_to?(:<=)
           raise ArgumentError, 'key does not support #<=>' 

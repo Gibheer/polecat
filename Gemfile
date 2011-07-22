@@ -1,5 +1,7 @@
 source "http://rubygems.org"
 
+gem "veritas", :git => 'https://github.com/dkubb/veritas.git'
+
 # comment out the gems, you don't want
 group :preferred do
   gem "virtus"

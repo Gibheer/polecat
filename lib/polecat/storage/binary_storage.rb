@@ -118,6 +118,13 @@ module Polecat
         end
       end
 
+      def each node = @root, &block
+        return if node.nil?
+        each node.lower, &block unless node.lower.nil?
+        yield node.key, node.value
+        each node.upper, &block unless node.upper.nil?
+      end
+
       def check_key key
         unless key.respond_to?(:<=>) && key.respond_to?(:<=)
           raise ArgumentError, 'key does not support #<=>' 
